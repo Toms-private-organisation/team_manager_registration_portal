@@ -2,7 +2,7 @@
 
 import 'package:team_manager_registration/Enum/EventType.dart';
 import 'package:team_manager_registration/dto/TeamDto.dart';
-import 'package:team_manager_registration/uitls/DateTimeUtils.dart';
+import 'package:team_manager_registration/utils/DateTimeUtils.dart';
 
 import 'ParticipationDto.dart';
 
