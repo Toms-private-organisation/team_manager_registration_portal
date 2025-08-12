@@ -2,9 +2,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../uitls/EnvironmentConfig.dart';
 
 class Constants{
-static String api = "https://api.olisport.app";
+  // Use environment-based configuration for API URL
+  static String get api => EnvironmentConfig.getSecureApiUrl();
 
   static const double markerSize = 25;
 
