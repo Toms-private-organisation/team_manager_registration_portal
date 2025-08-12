@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:team_manager_registration/Constants/Constants.dart';
 import 'package:team_manager_registration/ui/widgets/CustomNotification.dart';
-import 'package:team_manager_registration/uitls/ValidationUtils.dart';
+import 'package:team_manager_registration/utils/ValidationUtils.dart';
 
 import '../i18n/strings.g.dart';
 

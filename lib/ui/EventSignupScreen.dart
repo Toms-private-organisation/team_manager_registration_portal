@@ -18,8 +18,8 @@ import 'package:latlong2/latlong.dart' as lat_lng2;
 import 'package:team_manager_registration/ui/widgets/CustomNotification.dart';
 import 'package:team_manager_registration/ui/widgets/EventInfoRow.dart';
 import 'package:team_manager_registration/ui/widgets/OliButton.dart';
-import 'package:team_manager_registration/uitls/DateTimeUtils.dart';
-import 'package:team_manager_registration/uitls/LocaleUtils.dart';
+import 'package:team_manager_registration/utils/DateTimeUtils.dart';
+import 'package:team_manager_registration/utils/LocaleUtils.dart';
 
 /// The details screen
 class EventSignupScreen extends StatefulWidget {

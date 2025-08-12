@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../uitls/EnvironmentConfig.dart';
+import '../utils/EnvironmentConfig.dart';
 
 class Constants{
   // Use environment-based configuration for API URL
