@@ -22,6 +22,7 @@ import 'package:team_manager_registration/ui/widgets/EventInfoRow.dart';
 import 'package:team_manager_registration/ui/widgets/OliButton.dart';
 import 'package:team_manager_registration/uitls/DateTimeUtils.dart';
 import 'package:team_manager_registration/uitls/LocaleUtils.dart';
+import 'package:team_manager_registration/uitls/ValidationUtils.dart';
 
 
 
@@ -41,9 +42,31 @@ class DeleteProfileScreen extends StatefulWidget {
 
 
 class _DeleteProfileScreenState extends State<DeleteProfileScreen> {
+  final _formKey = GlobalKey<FormState>();
 
   Future<void> delete(BuildContext context) async {
-    UserDto user = UserDto(email: _emailController.value.text, password: _passwordController.value.text);
+    // Validate form before proceeding
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    // Validate inputs before sending request
+    String email = ValidationUtils.sanitizeInput(_emailController.value.text);
+    String password = _passwordController.value.text;
+
+    String? emailError = ValidationUtils.getEmailValidationError(email);
+    if (emailError != null) {
+      CustomNotification.showError(context: context, description: emailError);
+      return;
+    }
+
+    String? passwordError = ValidationUtils.getPasswordValidationError(password);
+    if (passwordError != null) {
+      CustomNotification.showError(context: context, description: passwordError);
+      return;
+    }
+
+    UserDto user = UserDto(email: email, password: password);
     Http http = Http();
     Response response = await http.delete(
         url: Constants.getDeleteUserPath(),
@@ -86,7 +109,9 @@ class _DeleteProfileScreenState extends State<DeleteProfileScreen> {
               child: SizedBox(
                 height: MediaQuery.of(context).size.height,
 
-child: Column(children: [
+              child: Form(
+                key: _formKey,
+                child: Column(children: [
   const Image(
     width: 300,
     image: AssetImage('assets/logo/alone/ALONE.png'),
@@ -104,6 +129,7 @@ child: Column(children: [
         hintText: t.user.email,
         prefixIcon: const Icon(CupertinoIcons.envelope)),
     controller: _emailController,
+    validator: (value) => ValidationUtils.getEmailValidationError(value ?? ''),
     inputFormatters: [
       FilteringTextInputFormatter.deny(
           RegExp(r'\s')),
@@ -119,6 +145,7 @@ child: Column(children: [
       FilteringTextInputFormatter.deny(
           RegExp(r'\s')),],
     controller: _passwordController,
+    validator: (value) => ValidationUtils.getPasswordValidationError(value ?? ''),
     obscureText: !_passwordVisible,
     decoration: InputDecoration(
       hintText: t.authentication.password,
@@ -147,7 +174,7 @@ child: Column(children: [
       textStyle: Constants.primaryButtonTextStyle,
       text: "Delete",
       onPressed: () => delete(context)),
-],)              ),
+],)),              ),
             ),
           ),
         ),
